@@ -1,8 +1,10 @@
 WES QC Hail NOTES
 
 
-Andrea Ganna's steps for running QC and analysis in WGS data: \
+Andrea Ganna's steps for running QC and analysis in WGS data:
+
 [Analysis Plan](https://storage.googleapis.com/wgspd-wgs-v1-noshared/Analysis_plan_METSIM.md.html)
+
 [WGSPD] (https://storage.googleapis.com/wgspd-wgs-v1/wgspd_guide_shared.html)
 
 

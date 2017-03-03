@@ -1,7 +1,7 @@
-WES QC Hail NOTES
+#WES QC Hail NOTES
 
 
-Andrea Ganna's steps for running QC and analysis in WGS data:
+###Andrea Ganna's steps for running QC and analysis in WGS data:
 
 [Analysis Plan](https://storage.googleapis.com/wgspd-wgs-v1-noshared/Analysis_plan_METSIM.md.html)
 
@@ -9,7 +9,7 @@ Andrea Ganna's steps for running QC and analysis in WGS data:
 
 
 
-Hail VEP from Cotton:
+###Hail VEP from Cotton:
 
 ```
 #!/bin/bash

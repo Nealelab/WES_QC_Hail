@@ -5,8 +5,22 @@
 
 [Analysis Plan](https://storage.googleapis.com/wgspd-wgs-v1-noshared/Analysis_plan_METSIM.md.html)
 
+Includes:
+ - Normalizing phenotypes
+ - pyhail quality control
+ - VEP annotation
+ - Score generation
+ - Association analysis
+
 [WGSPD] (https://storage.googleapis.com/wgspd-wgs-v1/wgspd_guide_shared.html)
 
+Includes:
+ - Data structure on the cloud
+ - Downloading files/data from the cloud
+ - Running Hail on the cloud
+ - QC filtering
+ - Generating PCs
+ - Annotation 
 
 
 ###Hail VEP from Cotton:

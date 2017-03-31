@@ -151,7 +151,7 @@ meta$STRAND_BALANCE <- STRAND_BALANCE
 
 
 ## write to file
-write.table(meta,output,col=T,row=F,quo=F,sep=',')
+write.table(meta,output,col=T,row=F,quo=F,sep='\t')
 
 
 ## ==== END of R script

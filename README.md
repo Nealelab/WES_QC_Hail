@@ -1,4 +1,4 @@
-**WES QC Process**:
+# June 2017: WES QC Process:
 
 0. Phenotype file QC
 	* GOAL: Understanding the phenotype data you are working with
@@ -125,22 +125,22 @@
     * TiTv
     * Singleton synonymous rate
 
+\
+\
+\
 
+## Variant QC Parameters:
 
+	* VQSLOD - Variant Quality Score in LOD space (or new RF posterior probabilities)
+	* pHWE - Hard-Weinberg Equilibrium
+	* AC - allele count
+	* median depth
+	* QD - quality by depth
+\
+\
+\
 
-
-
-**Variant QC Parameters**:
-
-VQSLOD - Variant Quality Score in LOD space (or new RF posterior probabilities)
-pHWE - Hard-Weinberg Equilibrium
-AC - allele count
-median depth
-QD - quality by depth
-
-
-
-**Sample QC Parameters**:
+## Sample QC Parameters:
 
 Primary QC parameters:
 
@@ -176,7 +176,7 @@ Primary QC parameters:
 
 
 
-**QC Comparisons**:
+## QC Comparisons:
 
  - Categorical Groupings:
 	* Cohorts
@@ -193,12 +193,15 @@ Primary QC parameters:
 	* Mean Depth (dpMean)
 	* Singleton Synonymous rate (nSingleton when restricting to synonymous variants)
 
-
-
-
-
-
-
+\
+\
+\
+\
+\
+\
+\
+\
+\
 
 # March 2017: WES QC Hail NOTES
 
@@ -281,3 +284,5 @@ gcloud dataproc jobs submit pyspark \
        --properties="spark.driver.extraClassPath=./$JAR_FILE,spark.executor.extraClassPath=./$JAR_FILE" \
        $script \
 ```
+
+

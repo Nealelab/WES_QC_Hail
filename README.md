@@ -1,6 +1,6 @@
 # June 2017: WES QC Process:
 
-0. Phenotype file QC
+0. **Phenotype file QC**
 	* GOAL: Understanding the phenotype data you are working with
 	* List and understand all sample phenotypes provided
 	* Match up phenotype file IDs with VCF IDs
@@ -12,7 +12,7 @@
 	* Generate sample QC metrics from raw VCF
 
 
-1. Pre-filtering
+1. **Pre-filtering**
 	* GOAL: Remove variants that are highly unlikely to be analyzed
     * Remove variants that fail VQSR
     * Remove variants outside the intersection of capture target intervals
@@ -21,7 +21,7 @@
 	* Create sites-only VDS and annotate with VEP (only need synonymous annotation for QC purposes)    
 
 
-2. Outlier sample QC: part 1
+2. **Outlier sample QC: part 1**
 	* GOAL: Remove samples that are contaminated or have poor sequencing levels
 	* Use pre-filtered VCF
 	* Plot values below before using DEFAULT filters to ensure you are not throwing away large amounts of samples
@@ -29,18 +29,18 @@
     * Chimeric read filtering (DEFAULT > 1.4% )
     * Call rate filtering (DEFAULT < 90%)
     * Mean Depth coverage filtering (DEFAULT < 20)
+\
 
-
-3. Sex check
+3. **Sex check**
 	* GOAL: remove samples where genotype sex does not equal reported sex
 	* Filter out variants within PAR coordinates
 	* Reported males shoud have X chromosome F-statistic from 0.8 to 1
 	* Reported females shoud have X chromosome F-statistic from -0.2 to 0.4
     * Remove samples with ambiguous imputed sex (X chromosome inbreeding coefficient between 0.4 and 0.8)
 	* Large-scale sex check errors are indicative of ID mismatching or upstream data mishandling
+\
 
-
-4. Principal components analysis
+4. **Principal components analysis**
 	* GOAL: Determine general ancestry of cohort
 	* Use raw VCF (so as not to exclude any common variants)
 	* Subset to common variant VCF (use 9k set: pruned_9k_common_variants_t.bim or generate your own)
@@ -53,7 +53,7 @@
 		* SNPWEIGHTS: https://www.hsph.harvard.edu/alkes-price/software/ (used by Chia-Yen Chen)
 
 
-5. Outlier sample QC: part 2
+5. **Outlier sample QC: part 2**
  	* GOAL: remove samples within cohort that have unusual variant properties
 	* Use pre-filtered VCF
 	* Examine per-cohort variation in:
@@ -63,9 +63,9 @@
 	* Plots with colors defined by assigned ancestry
 		* Different ancestries have significant mean differences in these ratios
 	* Filter out within cohort outliers (DEFAULT > 4 Std. deviations within a particular ancestry)
+\
 
-
-6. Principal components filtering
+6. **Principal components filtering**
     * GOAL: match case and controls within a common genetic ancestry
 	* Run Hail PCA without 1K Genomes samples 
 	* If retaining multiple ancestries, make sure to define ancestry groups in phenotype file
@@ -77,14 +77,14 @@
 		* Add these PCs as covariates to phenotype file
 
 
-7. Identity-by-descent (IBD) filtering
+7. **Identity-by-descent (IBD) filtering**
     * GOAL: remove 1st and 2nd degree relatives from population based sample
     * Within each ancestry group, calculate IBD using common variant VDS
     * Plot proportion of 0 shared and 1 shared alleles
     * IBD filtering on PI-HAT value (DEFAULT > 0.2)
 
 
-8. Variant QC
+8. **Variant QC**
 	* GOAL: Remove low quality/somatic variants
 	* Use pre-filtered VCF with outlier samples removed
     * Filter variants with low call rate (DEFAULT < 95%)
@@ -101,7 +101,7 @@
     * Generate sample QC metrics from variant-QC'ed VCF
 
 
-9. Assessing variant QC
+9. **Assessing variant QC**
     * Examine QC parameters across 3 filtering steps:
 	    * Raw VCF
 	    * Pre-filtered VCF
@@ -118,7 +118,7 @@
 	* Determine whether additional variant filtering needs to be done
 
 
-10. Final sample QC
+10. **Final sample QC**
 	* GOAL: See if any samples are outliers after variant QC
     * Call rate
     * Median Depth
@@ -284,5 +284,4 @@ gcloud dataproc jobs submit pyspark \
        --properties="spark.driver.extraClassPath=./$JAR_FILE,spark.executor.extraClassPath=./$JAR_FILE" \
        $script \
 ```
-
 

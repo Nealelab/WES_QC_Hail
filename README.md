@@ -1,7 +1,7 @@
 # June 2017: WES QC Process:
 
 0. **Phenotype file QC**
-	* GOAL: Understanding the phenotype data you are working with
+	* **GOAL:** Understanding the phenotype data you are working with
 	* List and understand all sample phenotypes provided
 	* Match up phenotype file IDs with VCF IDs
 		* Resolve any inconsistencies before moving forward
@@ -11,37 +11,33 @@
 	* Read VCF and sample file into Hail
 	* Generate sample QC metrics from raw VCF
 
-
 1. **Pre-filtering**
-	* GOAL: Remove variants that are highly unlikely to be analyzed
+	* **GOAL:** Remove variants that are highly unlikely to be analyzed
     * Remove variants that fail VQSR
     * Remove variants outside the intersection of capture target intervals
     * Remove variants in low-complexity regions
     * Generate sample QC metrics from pre-filtered VCF
 	* Create sites-only VDS and annotate with VEP (only need synonymous annotation for QC purposes)    
 
-
 2. **Outlier sample QC: part 1**
-	* GOAL: Remove samples that are contaminated or have poor sequencing levels
+	* **GOAL:** Remove samples that are contaminated or have poor sequencing levels
 	* Use pre-filtered VCF
 	* Plot values below before using DEFAULT filters to ensure you are not throwing away large amounts of samples
     * freemix contamination filtering (DEFAULT > 5%)
     * Chimeric read filtering (DEFAULT > 1.4% )
     * Call rate filtering (DEFAULT < 90%)
     * Mean Depth coverage filtering (DEFAULT < 20)
-\
 
 3. **Sex check**
-	* GOAL: remove samples where genotype sex does not equal reported sex
+	* **GOAL:** remove samples where genotype sex does not equal reported sex
 	* Filter out variants within PAR coordinates
 	* Reported males shoud have X chromosome F-statistic from 0.8 to 1
 	* Reported females shoud have X chromosome F-statistic from -0.2 to 0.4
     * Remove samples with ambiguous imputed sex (X chromosome inbreeding coefficient between 0.4 and 0.8)
 	* Large-scale sex check errors are indicative of ID mismatching or upstream data mishandling
-\
 
 4. **Principal components analysis**
-	* GOAL: Determine general ancestry of cohort
+	* **GOAL:** Determine general ancestry of cohort
 	* Use raw VCF (so as not to exclude any common variants)
 	* Subset to common variant VCF (use 9k set: pruned_9k_common_variants_t.bim or generate your own)
     * Run Hail PCA with 1K Genomes samples
@@ -52,9 +48,8 @@
 		* Random forest approach (used by TJ Singh)
 		* SNPWEIGHTS: https://www.hsph.harvard.edu/alkes-price/software/ (used by Chia-Yen Chen)
 
-
 5. **Outlier sample QC: part 2**
- 	* GOAL: remove samples within cohort that have unusual variant properties
+ 	* **GOAL:** remove samples within cohort that have unusual variant properties
 	* Use pre-filtered VCF
 	* Examine per-cohort variation in:
 		* TiTv ratio
@@ -63,10 +58,9 @@
 	* Plots with colors defined by assigned ancestry
 		* Different ancestries have significant mean differences in these ratios
 	* Filter out within cohort outliers (DEFAULT > 4 Std. deviations within a particular ancestry)
-\
 
 6. **Principal components filtering**
-    * GOAL: match case and controls within a common genetic ancestry
+    * **GOAL:** match case and controls within a common genetic ancestry
 	* Run Hail PCA without 1K Genomes samples 
 	* If retaining multiple ancestries, make sure to define ancestry groups in phenotype file
 	* PCA filtering (no DEFAULT filtering parameters)
@@ -76,16 +70,14 @@
 		* Re-evaluate PC dispersion  
 		* Add these PCs as covariates to phenotype file
 
-
 7. **Identity-by-descent (IBD) filtering**
-    * GOAL: remove 1st and 2nd degree relatives from population based sample
+    * **GOAL:** remove 1st and 2nd degree relatives from population based sample
     * Within each ancestry group, calculate IBD using common variant VDS
     * Plot proportion of 0 shared and 1 shared alleles
     * IBD filtering on PI-HAT value (DEFAULT > 0.2)
 
-
 8. **Variant QC**
-	* GOAL: Remove low quality/somatic variants
+	* **GOAL:** Remove low quality/somatic variants
 	* Use pre-filtered VCF with outlier samples removed
     * Filter variants with low call rate (DEFAULT < 95%)
 	    * Split variant call rate by capture, case/control status, or other category
@@ -100,7 +92,6 @@
     * Remove variants not in HWE (DEFAULT p < 1e-6)
     * Generate sample QC metrics from variant-QC'ed VCF
 
-
 9. **Assessing variant QC**
     * Examine QC parameters across 3 filtering steps:
 	    * Raw VCF
@@ -114,18 +105,15 @@
 	* Primary categories:
 		* Case/control (should be equal between groups)
 		* Cohort (should vary predictably)
-
 	* Determine whether additional variant filtering needs to be done
 
-
 10. **Final sample QC**
-	* GOAL: See if any samples are outliers after variant QC
+	* **GOAL:** See if any samples are outliers after variant QC
     * Call rate
     * Median Depth
     * TiTv
     * Singleton synonymous rate
 
-\
 \
 \
 
@@ -136,7 +124,6 @@
 	* AC - allele count
 	* median depth
 	* QD - quality by depth
-\
 \
 \
 
@@ -192,7 +179,6 @@ Primary QC parameters:
 	* % Coverage (callRate)
 	* Mean Depth (dpMean)
 	* Singleton Synonymous rate (nSingleton when restricting to synonymous variants)
-
 \
 \
 \
@@ -202,7 +188,6 @@ Primary QC parameters:
 \
 \
 \
-
 # March 2017: WES QC Hail NOTES
 
 

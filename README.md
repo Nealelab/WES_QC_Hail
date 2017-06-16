@@ -8,14 +8,22 @@ pruned_9k_common_variants_t.bim - TJ Singh's 9k common variant list (hg19) for g
 
 
 * [June 2017: WES QC Process (last updated June 2017)](#wes-qc-process)
-   1. [QC comparisons](#qc-comparisons)
-   2. [Sample QC Parameters](#sample-qc-parameters)
-   3. [Variant QC Parameters](#variant-qc-parameters)
-   4. [QC pipeline steps](#qc-pipeline-steps)
+   1. [Files](#files)
+   2. [QC comparisons](#qc-comparisons)
+   3. [Sample QC Parameters](#sample-qc-parameters)
+   4. [Variant QC Parameters](#variant-qc-parameters)
+   5. [QC pipeline steps](#qc-pipeline-steps)
 * [QC pipeline examples](#qc-pipeline-examples)
 
 
 # WES QC process
+
+## Files
+
+ * BAM_metrics.R - a quick way to get relevant BAM metrics from your VCF samples sequenced at the Broad
+ * DBS pipeline 2017-03-21.py - Kyle Satterstrom's DBS pipeline python script
+ * pruned_9k_common_variants_t.bim - TJ Singh's 9k common variant list (hg19) for getting ancestry/relatedness from exome variants
+
 
 ## QC comparisons
 

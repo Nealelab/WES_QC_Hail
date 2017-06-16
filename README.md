@@ -1,5 +1,5 @@
 
-__Data members: Please send comments / updates / suggestions as Issues in the github repo__
+**Fellow data members: Please send comments / updates / suggestions to the *Issues* section**
 
 
 * [June 2017: WES QC Process (last updated June 2017)](#wes-qc-process)

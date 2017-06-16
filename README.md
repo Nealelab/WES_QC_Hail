@@ -22,7 +22,7 @@ __Data members: Please send comments / updates / suggestions as Issues in the gi
 
 ## QC comparisons
 
- * Categorical Groupings
+**Categorical Groupings**
         * Cohorts/waves
         * C-Project
         * Capture platform
@@ -30,7 +30,7 @@ __Data members: Please send comments / updates / suggestions as Issues in the gi
         * Affection status
 	* Project specific categories
 
- * Quantitative parameters
+**Quantitative parameters**
         * Top Principal components
         * % Coverage (callRate)
         * Mean Depth (dpMean)
@@ -43,13 +43,13 @@ __Data members: Please send comments / updates / suggestions as Issues in the gi
 
 ## Sample QC Parameters
 
- * From GATK/Picard metadata:
+**From GATK/Picard metadata**
         * Freemix Contamination
         * Chimeric read percentage
         * PCT_TARGET_BASES_10X
         * PCT_TARGET_BASES_20X
 
- * From Hail Sample QC:
+**From Hail Sample QC Annotation Table**
 	* **Primary QC parameters** 
         * callRate
         * rTiTv
@@ -77,14 +77,14 @@ __Data members: Please send comments / updates / suggestions as Issues in the gi
 
 ## Variant QC Parameters
 
-	* **Variant Quality**
+**Variant Quality**
         * VQSLOD - Variant Quality Score in LOD space (or new RF posterior probabilities)
         * pHWE - Hard-Weinberg Equilibrium
         * AC - allele count
         * median depth
         * QD - quality by depth
 
-	* **Genotype Quality**
+**Genotype Quality**
 	* Depth
 	* PHRED likelihood (PL)
 	* Genotype Quality (GQ - same as PL in joint-called VCF)

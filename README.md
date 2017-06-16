@@ -1,7 +1,89 @@
-# June 2017: WES QC Process:
+* [June 2017: WES QC Process (last updated June 2017)](#wes-qc-process)
+   1. [QC comparisons](#qc-comparisons)
+   2. [Sample QC Parameters](#sample-qc-parameters)
+   3. [Variant QC Parameters](#variant-qc-parameters)
+   4. [QC pipeline steps](#qc-pipeline-steps)
+   5. [QC pipeline examples](#qc-pipeline-examples)
+
+
+#WES QC process
+
+##QC comparisons
+
+ - Categorical Groupings:
+        * Cohorts/waves
+        * C-Project
+        * Capture platform
+        * Sex
+        * Affection status
+	* Project specific categories
+
+ - Quantitative parameters:
+
+        * Top Principal components
+        * % Coverage (callRate)
+        * Mean Depth (dpMean)
+        * Singleton Synonymous rate (nSingleton when restricting to synonymous variants)
+	* Non-ExAC / non-discovEHR singleton rate
+		* discovEHR sites = /humgen/atgu1/fs03/shared_resources/discovEHR/GHS_Freeze_50.L3DP10.pVCF.frq.hail.vcf
+		* ExAC sites = /humgen/atgu1/fs03/shared_resources/ExAC/release0.3.1/ExAC.r0.3.1.sites.vep.vcf.gz
+		* [Non-Psych ExAC sites](ftp://ftp.broadinstitute.org/distribution/ExAC_release/release1/subsets/ExAC_nonpsych.r1.sites.vep.vcf.gz)
+
+
+##Sample QC Parameters
+
+ * From GATK/Picard metadata:
+        * Freemix Contamination
+        * Chimeric read percentage
+        * PCT_TARGET_BASES_10X
+        * PCT_TARGET_BASES_20X
+
+ * From Hail Sample QC:
+	* **Primary QC parameters** 
+        * callRate
+        * rTiTv
+        * rHetHomVar
+        * rInsertionDeletion
+        * nSingleton
+        * dpMean
+
+ 	* **Secondary QC parameters**
+        * nCalled
+        * nNotCalled
+        * nHomRef
+        * nHet
+        * nHomVar
+        * nSNP
+        * nInsertion
+        * nDeletion
+        * nTransition
+        * nTransversion
+        * dpStDev
+        * gqMean
+        * gqStDev
+        * nNonRef
+
+
+##Variant QC Parameters
+
+	* **Variant Quality**
+        * VQSLOD - Variant Quality Score in LOD space (or new RF posterior probabilities)
+        * pHWE - Hard-Weinberg Equilibrium
+        * AC - allele count
+        * median depth
+        * QD - quality by depth
+
+	* **Genotype Quality**
+	* Depth
+	* PHRED likelihood (PL)
+	* Genotype Quality (GQ - same as PL in joint-called VCF)
+	* Allele Depth (AD)
+
+
+##QC pipeline steps
 
 0. **Phenotype file QC**
-	* **GOAL:** Understanding the phenotype data you are working with
+	* **GOAL: Understanding the phenotype data you are working with**
 	* List and understand all sample phenotypes provided
 	* Match up phenotype file IDs with VCF IDs
 		* Resolve any inconsistencies before moving forward
@@ -12,7 +94,7 @@
 	* Generate sample QC metrics from raw VCF
 
 1. **Pre-filtering**
-	* **GOAL:** Remove variants that are highly unlikely to be analyzed
+	* **GOAL: Remove variants that are highly unlikely to be analyzed**
     * Remove variants that fail VQSR
     * Remove variants outside the intersection of capture target intervals
     * Remove variants in low-complexity regions
@@ -20,7 +102,7 @@
 	* Create sites-only VDS and annotate with VEP (only need synonymous annotation for QC purposes)    
 
 2. **Outlier sample QC: part 1**
-	* **GOAL:** Remove samples that are contaminated or have poor sequencing levels
+	* **GOAL: Remove samples that are contaminated or have poor sequencing levels**
 	* Use pre-filtered VCF
 	* Plot values below before using DEFAULT filters to ensure you are not throwing away large amounts of samples
     * freemix contamination filtering (DEFAULT > 5%)
@@ -29,7 +111,7 @@
     * Mean Depth coverage filtering (DEFAULT < 20)
 
 3. **Sex check**
-	* **GOAL:** remove samples where genotype sex does not equal reported sex
+	* **GOAL: remove samples where genotype sex does not equal reported sex**
 	* Filter out variants within PAR coordinates
 	* Reported males shoud have X chromosome F-statistic from 0.8 to 1
 	* Reported females shoud have X chromosome F-statistic from -0.2 to 0.4
@@ -37,7 +119,7 @@
 	* Large-scale sex check errors are indicative of ID mismatching or upstream data mishandling
 
 4. **Principal components analysis**
-	* **GOAL:** Determine general ancestry of cohort
+	* **GOAL: Determine general ancestry of cohort**
 	* Use raw VCF (so as not to exclude any common variants)
 	* Subset to common variant VCF (use 9k set: pruned_9k_common_variants_t.bim or generate your own)
     * Run Hail PCA with 1K Genomes samples
@@ -49,7 +131,7 @@
 		* SNPWEIGHTS: https://www.hsph.harvard.edu/alkes-price/software/ (used by Chia-Yen Chen)
 
 5. **Outlier sample QC: part 2**
- 	* **GOAL:** remove samples within cohort that have unusual variant properties
+ 	* **GOAL: remove samples within cohort that have unusual variant properties**
 	* Use pre-filtered VCF
 	* Examine per-cohort variation in:
 		* TiTv ratio
@@ -60,7 +142,7 @@
 	* Filter out within cohort outliers (DEFAULT > 4 Std. deviations within a particular ancestry)
 
 6. **Principal components filtering**
-    * **GOAL:** match case and controls within a common genetic ancestry
+    * **GOAL: match case and controls within a common genetic ancestry**
 	* Run Hail PCA without 1K Genomes samples 
 	* If retaining multiple ancestries, make sure to define ancestry groups in phenotype file
 	* PCA filtering (no DEFAULT filtering parameters)
@@ -71,13 +153,13 @@
 		* Add these PCs as covariates to phenotype file
 
 7. **Identity-by-descent (IBD) filtering**
-    * **GOAL:** remove 1st and 2nd degree relatives from population based sample
+    * **GOAL: remove 1st and 2nd degree relatives from population based sample**
     * Within each ancestry group, calculate IBD using common variant VDS
     * Plot proportion of 0 shared and 1 shared alleles
     * IBD filtering on PI-HAT value (DEFAULT > 0.2)
 
 8. **Variant QC**
-	* **GOAL:** Remove low quality/somatic variants
+	* **GOAL: Remove low quality/somatic variants**
 	* Use pre-filtered VCF with outlier samples removed
     * Filter variants with low call rate (DEFAULT < 95%)
 	    * Split variant call rate by capture, case/control status, or other category
@@ -93,11 +175,13 @@
     * Generate sample QC metrics from variant-QC'ed VCF
 
 9. **Assessing variant QC**
+    * **GOAL: Determine if more stringent variant QC is needed**
     * Examine QC parameters across 3 filtering steps:
 	    * Raw VCF
 	    * Pre-filtered VCF
 	    * Variant QC'ed VCF
 	* QC parameters:
+		* Number of SNPs / Indels
 		* TiTv ratio
 		* Het/Hom ratio
 		* Ins/Del ratio
@@ -108,87 +192,20 @@
 	* Determine whether additional variant filtering needs to be done
 
 10. **Final sample QC**
-	* **GOAL:** See if any samples are outliers after variant QC
+	* **GOAL: See if any samples are outliers after variant QC**
     * Call rate
     * Median Depth
     * TiTv
     * Singleton synonymous rate
 
-\
-\
-
-## Variant QC Parameters:
-
-	* VQSLOD - Variant Quality Score in LOD space (or new RF posterior probabilities)
-	* pHWE - Hard-Weinberg Equilibrium
-	* AC - allele count
-	* median depth
-	* QD - quality by depth
-\
-\
-
-## Sample QC Parameters:
-
-Primary QC parameters:
-
- - From GATK/Picard metadata:
-	* Freemix Contamination
-	* Chimeric read percentage
-	* PCT_TARGET_BASES_10X
-	* PCT_TARGET_BASES_20X
-
- - From Hail Sample QC:
-	* callRate
-	* rTiTv
-	* rHetHomVar
-	* rInsertionDeletion
-	* nSingleton
-	* dpMean
-
- - Secondary QC parameters:
-	* nCalled
-	* nNotCalled
-	* nHomRef
-	* nHet
-	* nHomVar
-	* nSNP
-	* nInsertion
-	* nDeletion
-	* nTransition
-	* nTransversion
-	* dpStDev
-	* gqMean
-	* gqStDev
-	* nNonRef
 
 
 
-## QC Comparisons:
-
- - Categorical Groupings:
-	* Cohorts
-	* C-Project
-	* Capture platform
-	* Sex
-	* Affection status
 
 
- - Quantitative parameters:
+##QC pipeline examples
 
-	* Top Principal components
-	* % Coverage (callRate)
-	* Mean Depth (dpMean)
-	* Singleton Synonymous rate (nSingleton when restricting to synonymous variants)
-\
-\
-\
-\
-\
-\
-\
-\
-\
-# March 2017: WES QC Hail NOTES
+**March 2017: WES QC Hail NOTES**
 
 
  ### Andrea Ganna's steps for running QC and analysis in WGS data:

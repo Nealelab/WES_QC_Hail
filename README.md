@@ -1,11 +1,6 @@
 
 __Data members: Please send comments / updates / suggestions as Issues in the github repo__
 
-Files:
-BAM_metrics.R - a quick way to get relevant BAM metrics from your VCF samples sequenced at the Broad
-DBS pipeline 2017-03-21.py - Kyle Satterstrom's DBS pipeline python script
-pruned_9k_common_variants_t.bim - TJ Singh's 9k common variant list (hg19) for getting ancestry/relatedness from exome variants
-
 
 * [June 2017: WES QC Process (last updated June 2017)](#wes-qc-process)
    1. [Files](#files)
@@ -20,14 +15,14 @@ pruned_9k_common_variants_t.bim - TJ Singh's 9k common variant list (hg19) for g
 
 ## Files
 
- * BAM_metrics.R - a quick way to get relevant BAM metrics from your VCF samples sequenced at the Broad
- * DBS pipeline 2017-03-21.py - Kyle Satterstrom's DBS pipeline python script
- * pruned_9k_common_variants_t.bim - TJ Singh's 9k common variant list (hg19) for getting ancestry/relatedness from exome variants
+ * **BAM_metrics.R** - a quick way to get relevant BAM metrics from your VCF samples sequenced at the Broad
+ * **DBS pipeline 2017-03-21.py** - Kyle Satterstrom's DBS pipeline python script
+ * **pruned_9k_common_variants_t.bim** - TJ Singh's 9k common variant list (hg19) for getting ancestry/relatedness from exome variants
 
 
 ## QC comparisons
 
- - Categorical Groupings:
+ * Categorical Groupings
         * Cohorts/waves
         * C-Project
         * Capture platform
@@ -35,8 +30,7 @@ pruned_9k_common_variants_t.bim - TJ Singh's 9k common variant list (hg19) for g
         * Affection status
 	* Project specific categories
 
- - Quantitative parameters:
-
+ * Quantitative parameters
         * Top Principal components
         * % Coverage (callRate)
         * Mean Depth (dpMean)

@@ -123,7 +123,7 @@
 
 3. **Sex check**
 	* **GOAL: remove samples where genotype sex does not equal reported sex**
-	* Filter out variants within PAR coordinates
+	* Filter out variants within PAR coordinates (https://en.wikipedia.org/wiki/Pseudoautosomal_region)
 	* Reported males shoud have X chromosome F-statistic from 0.8 to 1
 	* Reported females shoud have X chromosome F-statistic from -0.2 to 0.4
     * Remove samples with ambiguous imputed sex (X chromosome inbreeding coefficient between 0.4 and 0.8)

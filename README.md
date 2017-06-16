@@ -1,14 +1,18 @@
+
+__Data members: Please send comments / updates / suggestions as Issues in the github repo__
+
+
 * [June 2017: WES QC Process (last updated June 2017)](#wes-qc-process)
    1. [QC comparisons](#qc-comparisons)
    2. [Sample QC Parameters](#sample-qc-parameters)
    3. [Variant QC Parameters](#variant-qc-parameters)
    4. [QC pipeline steps](#qc-pipeline-steps)
-   5. [QC pipeline examples](#qc-pipeline-examples)
+* [QC pipeline examples](#qc-pipeline-examples)
 
 
-#WES QC process
+# WES QC process
 
-##QC comparisons
+## QC comparisons
 
  - Categorical Groupings:
         * Cohorts/waves
@@ -30,7 +34,7 @@
 		* [Non-Psych ExAC sites](ftp://ftp.broadinstitute.org/distribution/ExAC_release/release1/subsets/ExAC_nonpsych.r1.sites.vep.vcf.gz)
 
 
-##Sample QC Parameters
+## Sample QC Parameters
 
  * From GATK/Picard metadata:
         * Freemix Contamination
@@ -64,7 +68,7 @@
         * nNonRef
 
 
-##Variant QC Parameters
+## Variant QC Parameters
 
 	* **Variant Quality**
         * VQSLOD - Variant Quality Score in LOD space (or new RF posterior probabilities)
@@ -80,7 +84,7 @@
 	* Allele Depth (AD)
 
 
-##QC pipeline steps
+## QC pipeline steps
 
 0. **Phenotype file QC**
 	* **GOAL: Understanding the phenotype data you are working with**
@@ -203,12 +207,12 @@
 
 
 
-##QC pipeline examples
+## QC pipeline examples
 
-**March 2017: WES QC Hail NOTES**
+** March 2017: WES QC Hail NOTES **
 
 
- ### Andrea Ganna's steps for running QC and analysis in WGS data:
+** Andrea Ganna's steps for running QC and analysis in WGS data: **
 
 [Analysis Plan](https://storage.googleapis.com/wgspd-wgs-v1-noshared/Analysis_plan_METSIM.md.html)
 
@@ -230,7 +234,7 @@ Includes:
  - Annotation 
 
  
-### Hail VEP from Cotton:
+** Hail VEP from Cotton: **
 
 ```
 #!/bin/bash
@@ -247,7 +251,7 @@ export SPARK_CLASSPATH=$JAR
 ```
 
 
-### Starting up PyHail on Google Cloud Platform
+** Starting up PyHail on Google Cloud Platform **
 
 ```
 #!/bin/bash

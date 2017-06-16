@@ -23,56 +23,56 @@ __Data members: Please send comments / updates / suggestions as Issues in the gi
 ## QC comparisons
 
 **Categorical Groupings**
-        * Cohorts/waves
-        * C-Project
-        * Capture platform
-        * Sex
-        * Affection status
-	* Project specific categories
+  * Cohorts/waves
+  * C-Project
+  * Capture platform
+  * Sex
+  * Affection status
+  * Project specific categories
 
 **Quantitative parameters**
-        * Top Principal components
-        * % Coverage (callRate)
-        * Mean Depth (dpMean)
-        * Singleton Synonymous rate (nSingleton when restricting to synonymous variants)
-	* Non-ExAC / non-discovEHR singleton rate
-		* discovEHR sites = /humgen/atgu1/fs03/shared_resources/discovEHR/GHS_Freeze_50.L3DP10.pVCF.frq.hail.vcf
-		* ExAC sites = /humgen/atgu1/fs03/shared_resources/ExAC/release0.3.1/ExAC.r0.3.1.sites.vep.vcf.gz
-		* [Non-Psych ExAC sites](ftp://ftp.broadinstitute.org/distribution/ExAC_release/release1/subsets/ExAC_nonpsych.r1.sites.vep.vcf.gz)
+  * Top Principal components
+  * % Coverage (callRate)
+  * Mean Depth (dpMean)
+  * Singleton Synonymous rate (nSingleton when restricting to synonymous variants)
+  * Non-ExAC / non-discovEHR singleton rate
+	* discovEHR sites = /humgen/atgu1/fs03/shared_resources/discovEHR/GHS_Freeze_50.L3DP10.pVCF.frq.hail.vcf
+	* ExAC sites = /humgen/atgu1/fs03/shared_resources/ExAC/release0.3.1/ExAC.r0.3.1.sites.vep.vcf.gz
+	* [Non-Psych ExAC sites](ftp://ftp.broadinstitute.org/distribution/ExAC_release/release1/subsets/ExAC_nonpsych.r1.sites.vep.vcf.gz)
 
 
 ## Sample QC Parameters
 
 **From GATK/Picard metadata**
-        * Freemix Contamination
-        * Chimeric read percentage
-        * PCT_TARGET_BASES_10X
-        * PCT_TARGET_BASES_20X
+  * Freemix Contamination
+  * Chimeric read percentage
+  * PCT_TARGET_BASES_10X
+  * PCT_TARGET_BASES_20X
 
 **From Hail Sample QC Annotation Table**
-	* **Primary QC parameters** 
-        * callRate
-        * rTiTv
-        * rHetHomVar
-        * rInsertionDeletion
-        * nSingleton
-        * dpMean
+**Primary QC parameters** 
+  * callRate
+  * rTiTv
+  * rHetHomVar
+  * rInsertionDeletion
+  * nSingleton
+  * dpMean
 
- 	* **Secondary QC parameters**
-        * nCalled
-        * nNotCalled
-        * nHomRef
-        * nHet
-        * nHomVar
-        * nSNP
-        * nInsertion
-        * nDeletion
-        * nTransition
-        * nTransversion
-        * dpStDev
-        * gqMean
-        * gqStDev
-        * nNonRef
+**Secondary QC parameters**
+  * nCalled
+  * nNotCalled
+  * nHomRef
+  * nHet
+  * nHomVar
+  * nSNP
+  * nInsertion
+  * nDeletion
+  * nTransition
+  * nTransversion
+  * dpStDev
+  * gqMean
+  * gqStDev
+  * nNonRef
 
 
 ## Variant QC Parameters

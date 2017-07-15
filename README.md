@@ -36,6 +36,7 @@
   * Mean Depth (dpMean)
   * Singleton Synonymous rate (nSingleton when restricting to synonymous variants)
   * Non-ExAC / non-discovEHR singleton rate
+        * 92k ExAC/GnomAD sites with Psych-exomes and MiGEN removed: `gs://exome-qc/resources/gnomad.r2.0.1/gnomad.r2.0.1.nonpsych.variants.tsv`
 	* discovEHR sites `/humgen/atgu1/fs03/shared_resources/discovEHR/GHS_Freeze_50.L3DP10.pVCF.frq.hail.vcf`
 	* ExAC sites `/humgen/atgu1/fs03/shared_resources/ExAC/release0.3.1/ExAC.r0.3.1.sites.vep.vcf.gz`
 	* Non-Psych ExAC sites `ftp://ftp.broadinstitute.org/distribution/ExAC_release/release1/subsets/ExAC_nonpsych.r1.sites.vep.vcf.gz`

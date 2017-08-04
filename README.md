@@ -91,6 +91,10 @@
   * Genotype Quality (GQ - same as PL in joint-called VCF)
   * Allele Depth (AD)
 
+**Well-covered region intervals**
+  * Regions that show minimum 10x depth in 80% of samples from 47 sequencing batches (20 are Agilent, 18 are ICE, 9 others) at the Broad
+ `gs://exome-qc/resources/coverage/agilent_regions_20170703.bed.bgz`
+ `gs://exome-qc/resources/coverage/ice_regions_20170703.bed.bgz`
 
 ## QC pipeline steps
 

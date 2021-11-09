@@ -1,3 +1,178 @@
+# CCDG WGS & WES QC Pipeline Steps
+
+## WGS Data
+
+```
+Hail: INFO: wrote matrix table with 2907865897 rows and 136959 columns in 121159 partitions to gs://ccdg/vds/wgs_136k_recombine.vds/reference_data
+    Total size: 86.05 TiB
+    * Rows/entries: 86.05 TiB
+    * Columns: 633.99 KiB
+    * Globals: 11.00 B
+    * Smallest partition: 4 rows (116.47 KiB)
+    * Largest partition:  9161 rows (841.07 MiB)
+Hail: INFO: wrote matrix table with 1105368358 rows and 136959 columns in 121159 partitions to gs://ccdg/vds/wgs_136k_recombine.vds/variant_data
+    Total size: 22.68 TiB
+    * Rows/entries: 22.68 TiB
+    * Columns: 633.99 KiB
+    * Globals: 11.00 B
+    * Smallest partition: 0 rows (20.00 B)
+    * Largest partition:  18048 rows (6.11 GiB)
+```
+
+
+## WES Data
+
+```
+Hail: INFO: wrote matrix table with 268099170 rows and 203664 columns in 5439 partitions to gs://ccdg/vds/split_200k_ccdg_exome.vds/reference_data
+    Total size: 1.96 TiB
+    * Rows/entries: 1.96 TiB
+    * Columns: 920.55 KiB
+    * Globals: 11.00 B
+    * Smallest partition: 1 rows (153.00 B)
+    * Largest partition:  53478 rows (1.01 GiB)
+Hail: INFO: wrote matrix table with 111590474 rows and 203664 columns in 5439 partitions to gs://ccdg/vds/split_200k_ccdg_exome.vds/variant_data
+    Total size: 1.40 TiB
+    * Rows/entries: 1.40 TiB
+    * Columns: 920.55 KiB
+    * Globals: 11.00 B
+    * Smallest partition: 0 rows (20.00 B)
+    * Largest partition:  36797 rows (11.03 GiB)
+```
+
+Reference data have the following schema:
+
+`vds.reference_data.describe()`
+
+```
+----------------------------------------
+Global fields:
+    None
+----------------------------------------
+Column fields:
+    's': str
+----------------------------------------
+Row fields:
+    'locus': locus<GRCh38>
+    'ref_allele': str
+----------------------------------------
+Entry fields:
+    'END': int32
+    'DP': int32
+    'GQ': int32
+----------------------------------------
+Column key: ['s']
+Row key: ['locus']
+----------------------------------------
+```
+
+
+Variant data have the following schema:
+
+`vds.variant_data.describe()`
+
+```
+----------------------------------------
+Global fields:
+    None
+----------------------------------------
+Column fields:
+    's': str
+----------------------------------------
+Row fields:
+    'locus': locus<GRCh38>
+    'alleles': array<str>
+    'rsid': str
+----------------------------------------
+Entry fields:
+    'LA': array<int32>
+    'LGT': call
+    'LAD': array<int32>
+    'LPGT': call
+    'LPL': array<int32>
+    'RGQ': int32
+    'gvcf_info': struct {
+          ...
+    }
+    'DP': int32
+    'GQ': int32
+    'MIN_DP': int32
+    'PID': str
+    'SB': array<int32>
+----------------------------------------
+Column key: ['s']
+Row key: ['locus', 'alleles']
+----------------------------------------
+
+```
+
+0. **Interval QC (WES Data Only)**
+
+1. **Variants Hard Filtering**
+  * **GOAL:Select reliable variant sets for downstream QC**
+    * Filter variants in CCDG+gnomAD genomes to high quality exomes intervals for both CCDG & gnomAD 
+    * Select variants based on (gnomAD v3 variants):
+      - gnomAD v2.1
+        + Present in both exomes and genomes
+        + Autosomal, bi-allelic single nucleotide variants (SNVs) only
+        + Allele frequency > 0.1%
+        + Call rate > 99%
+        + LD-pruned with a cutoff of r2 = 0.1
+      - 5k sites that were curated by Shaun Purcell when performing GWAS (lifted over)
+      - Then selected all bi-allelic SNVs with an Inbreeding coefficient > -0.25 (no excess of heterozygotes)
+
+2. **Sample QC Metric Computation**
+  * **GOAL: generate metrics for downstream sample QC**
+    * `hl.vds.sample_qc()`
+  
+3. **Sex Imputation(Before/After Interval QC for WES Data)**
+
+4. **Samples Hard Filtering**
+    * Low coverage
+    * High/low `n_snp`
+    * High `n_singleton`
+    * High `r_het_hom_var`
+    * Ambiguous sex
+    * Sex aneuploidy
+
+5. **Platform PCA**
+  * **GOAL: Determine which platform samples are from**
+
+6. **Relatedness Inference**
+  * **GOAL: Remove related samples**
+    * Approach 1:
+      - `hl.pc_relate()` 
+      - `hl.maximal_independent_set()`
+      - `maximal independent set of samples`
+      - `hl.hwe_normalized_pca()`
+      - Project the related samples to the unrelated samples
+    * Approach 2:
+      - Project all samples to gnomAD
+      - Compute relatedness
+
+7. **Ancestry Inference**
+  * **GOAL: Determine general ancestry of cohort**
+    * Approach 1: using labels within data
+    * Approach 2: Joint call with 1KG and HGDP
+    * Approach 3: Project onto gnomAD PCA loadings.
+
+8. **Outlier Sample Detection**
+  * **GOAL: Remove outlier samples based on sample qc metrics stratified by population group**
+    * `n_snp`, `ti/tv`, `in/del`, `het/hom` (DEFAULT > 4 MAD)
+      - Ancestry: EUR/EAS/AFR/SAS, filter out within cohort outliers.
+      - PCs: PC1 - PC10, filter out outliers on each PC.
+      - Platform: check % filtered for each platform.
+
+9. **Variant QC**
+  * **GOAL: Remove low quality/somatic variants**
+
+10. **Genotype QC**
+    * GQ >= 20
+    * DP >= 10
+    * 0.2 < AB <0.8
+
+---
+
+
 
 **Fellow data members: Please send comments / updates / suggestions to the *Issues* section**
 

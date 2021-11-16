@@ -105,26 +105,31 @@ Row key: ['locus', 'alleles']
 
 ```
 
-0. **Interval QC (WES Data Only)**
+0. **Variants Hard Filtering**
+  * **GOAL:Select reliable variant sets for PCA**
+  * Overall: Filter variants in CCDG+gnomAD genomes to variants with high callrate and in high quality intervals from both CCDG & UKBB exomes 
+    * Filter CCDG genomes and exomes variants to:
+      - Present in both exomes and genomes
+      - Variants in autosomes
+      - (bi-allelic/all ?) single nucleotide variants (SNVs) only
+      - Variants in good capture platforms (high quality intervals in UKBB 455K exomes & CCDG exomes)
+      - [Optional] Variants with a precomputed AC > 10 in gnomAD v3 genomes
+    * Densify variants in CCDG genomes and exomes
+    * Compute combined MAF and Callrate for CCDG and gnomAD v3 genomes, and Callrate for CCDG and UKBB exomes 
+      - Combined MAF > 0.1% (or lower?)
+      - Combined Callrate > 99%
+      - High Callrate in CCDG and UKBB exomes (cutoff TBD)
+    * LD Pruning
+      - Select CCDG or gnomAD genomes to be the LD pruning dataset
+      - LD pruning with a cutoff of r2 = 0.1
 
-1. **Variants Hard Filtering**
-  * **GOAL:Select reliable variant sets for downstream QC**
-    * Filter variants in CCDG+gnomAD genomes to high quality exomes intervals for both CCDG & gnomAD 
-    * Select variants based on (gnomAD v3 variants):
-      - gnomAD v2.1
-        + Present in both exomes and genomes
-        + Autosomal, bi-allelic single nucleotide variants (SNVs) only
-        + Allele frequency > 0.1%
-        + Call rate > 99%
-        + LD-pruned with a cutoff of r2 = 0.1
-      - 5k sites that were curated by Shaun Purcell when performing GWAS (lifted over)
-      - Then selected all bi-allelic SNVs with an Inbreeding coefficient > -0.25 (no excess of heterozygotes)
-
-2. **Sample QC Metric Computation**
+1. **Sample QC Metric Computation**
   * **GOAL: generate metrics for downstream sample QC**
     * `hl.vds.sample_qc()`
   
-3. **Sex Imputation(Before/After Interval QC for WES Data)**
+2. **Sex Imputation(Before/After Interval QC for WES Data)**
+
+3. **Interval QC (WES Data Only)**
 
 4. **Samples Hard Filtering**
     * Low coverage

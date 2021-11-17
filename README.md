@@ -106,8 +106,8 @@ Row key: ['locus', 'alleles']
 ```
 
 0. **Variants Hard Filtering**
-  * **GOAL:Select reliable variant sets for PCA**
-  * Overall: Filter variants in CCDG+gnomAD genomes to variants with high callrate and in high quality intervals from both CCDG & UKBB exomes 
+  * **GOAL:Select reliable variants for PCA**
+  * Overall: Filter variants in CCDG + gnomAD genomes to variants with high callrate and in high quality intervals from both CCDG & UKBB exomes 
     * Filter CCDG genomes and exomes variants to:
       - Present in both exomes and genomes
       - Variants in autosomes
